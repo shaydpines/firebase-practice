@@ -14,10 +14,8 @@ const [user, setUser] = useState({});
 const [loading, setLoading] = useState(true)
 
 useEffect (() => {
-
   onAuthStateChanged(auth, (user) => {
     setLoading(false);
-    console.log(user);
     if (user) {
       setUser(user)
     }
@@ -28,7 +26,7 @@ useEffect (() => {
     console.log("register");
     createUserWithEmailAndPassword(auth, "email@email.com", "test123")
       .then((user) => {
-        console.log(user);
+        console.log(user)
       })
       .catch((error) => {
         console.log("error");
@@ -55,7 +53,7 @@ useEffect (() => {
 
   return (
   <>
-  <Nav user={user} register={register} signIn={signIn} logOut={logOut} />
+  <Nav user={user} loading={loading} register={register} signIn={signIn} logOut={logOut} />
   <div className="main__info">{loading ? 'Loading...' : user.email}</div>
   </>
   );
