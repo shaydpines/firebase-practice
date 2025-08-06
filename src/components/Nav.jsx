@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FES from "../assets/FES.svg";
 
 export default function Nav({ user, loading, register, signIn, logOut }) {
-
-  useEffect(() => {
-        console.log(loading);
-      }, [loading]);
 
   return (
     <nav>
@@ -17,6 +13,11 @@ export default function Nav({ user, loading, register, signIn, logOut }) {
         </div>
         <div className="login__info">
           {loading ? (
+            <>
+              <div className="skeleton__nav--btn--round">E</div>
+              <div className="skeleton__nav--btn">Register</div>
+            </>
+          ) : (
             JSON.stringify(user) === "{}" ? (
               <>
                 <button className="nav__btn btn__purple" onClick={register}>
@@ -33,10 +34,6 @@ export default function Nav({ user, loading, register, signIn, logOut }) {
                 </button>
               </>
             )
-          ) : (
-            <>
-              <div className="skeleton__nav--btn">E</div>
-            </>
           )}
         </div>
       </div>

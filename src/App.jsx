@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import "./App.css";
-import { auth } from "./firebase/init"
-import { 
+import { auth } from "./firebase/init";
+import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
- } from "firebase/auth";
- import Nav from './components/Nav';
+  onAuthStateChanged,
+} from "firebase/auth";
+import Nav from "./components/Nav";
 
 function App() {
-const [user, setUser] = useState({});
-const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
 
-useEffect (() => {
-  onAuthStateChanged(auth, (user) => {
-    setLoading(false);
-    if (user) {
-      setUser(user)
-    }
-  })
-}, [])
+  useEffect(() => {
+    setTimeout(() => {
+      onAuthStateChanged(auth, (user) => {
+        setLoading(false);
+        if (user) {
+          setUser(user);
+        }
+      });
+    }, 300);
+  }, []);
 
   function register() {
     console.log("register");
     createUserWithEmailAndPassword(auth, "email@email.com", "test123")
       .then((user) => {
-        console.log(user)
+        console.log(user);
       })
       .catch((error) => {
         console.log("error");
@@ -34,28 +36,39 @@ useEffect (() => {
   }
 
   function signIn() {
-    console.log('sign in');
-    signInWithEmailAndPassword(auth, 'email@email.com', 'test123')
-    .then(({ user }) => {
-      console.log('user:' + user.email);
-      setUser(user)
+    setLoading(true);
+    setTimeout(() => {
+      signInWithEmailAndPassword(auth, "email@email.com", "test123")
+      .then(({ user }) => {
+        console.log("user:" + user.email);
+        setUser(user);
+        setLoading(false);
       })
       .catch((error) => {
         console.log("error");
-    })
+        setLoading(false);
+      });      
+        }, 300)
+    console.log("sign in");
   }
 
   function logOut() {
-    console.log("sign out")
+    console.log("sign out");
     signOut(auth);
     setUser({});
   }
 
   return (
-  <>
-  <Nav user={user} loading={loading} register={register} signIn={signIn} logOut={logOut} />
-  <div className="main__info">{loading ? 'Loading...' : user.email}</div>
-  </>
+    <>
+      <Nav
+        user={user}
+        loading={loading}
+        register={register}
+        signIn={signIn}
+        logOut={logOut}
+      />
+      <div className="main__info">{loading ? "Loading..." : user.email}</div>
+    </>
   );
 }
 
