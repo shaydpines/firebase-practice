@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FES from "../assets/FES.svg";
 
-export default function Nav({ user, userString, register, signIn, logOut }) {
+export default function Nav({ user, register, signIn, logOut }) {
 
   return (
     <nav>
@@ -16,7 +16,8 @@ export default function Nav({ user, userString, register, signIn, logOut }) {
           </>
         ) : (
           <>
-          <button className="account__icon">{userString}</button>
+          <button className="account__icon">{user.email[0]}</button>
+          <button className="account__icon">{user.email[0].toUppercase()}</button>
           <button onClick={logOut}>Sign Out</button>
           </>
         )}

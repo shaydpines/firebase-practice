@@ -11,7 +11,6 @@ import {
 
 function App() {
 const [user, setUser] = useState({});
-const [userString, setUserString] = useState('')
 const [loading, setLoading] = useState(true)
 
 useEffect (() => {
@@ -21,7 +20,6 @@ useEffect (() => {
     console.log(user);
     if (user) {
       setUser(user)
-      setUserString(user.email[0].toUppercase())
     }
   })
 }, [])
@@ -43,7 +41,6 @@ useEffect (() => {
     .then(({ user }) => {
       console.log('user:' + user.email);
       setUser(user)
-      setUserString(user.email[0].toUppercase())
       })
       .catch((error) => {
         console.log("error");
@@ -58,7 +55,7 @@ useEffect (() => {
 
   return (
   <>
-  <Nav user={user} userString={userString} register={register} signIn={signIn} logOut={logOut} />
+  <Nav user={user} register={register} signIn={signIn} logOut={logOut} />
   <div className="main__info">{loading ? 'Loading...' : user.email}</div>
   </>
   );
